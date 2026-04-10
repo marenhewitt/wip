@@ -1,3 +1,6 @@
+import { db } from "firebase.js";
+import { collection, addDoc } from "firebase/firestore";
+
 function loadDoc(url, func){
     let xhttp = new XMLHttpRequest();
     xhttp.onload = function(){
@@ -11,15 +14,8 @@ function loadDoc(url, func){
     xhttp.send();
 }
 
-function grab_location_data(){
-    let xhttp = new XMLHttpRequest();
-    xhttp.onload = function(){
-        if (xhttp.status != 200){
-            console.log("Error");
-        } else {
-            grab_location_data_response(xhttp.response);
-        }
-    }
+async function grab_location_data(){
+    //error checking for wrong zipcode format
 
 }
 
@@ -34,5 +30,57 @@ function grab_location_data_response(){
 }
 
 
+//LOGIN
+let email = '';
+let password = '';
+let isSignUp = false;
+let error = '';
+let loading = false;
+
+async function handleEmailPasswordSubmit(e){
+    e.preventDefault();
+    error = '';
+    loading = true;
+
+    try {
+        if (isSignUp){
+            await createUserWithEmailAndPassword(auth, email, password);
+        } else {
+            await signInUserWithEmailAndPassword(auth, email, password);
+        }
+    } catch (err) {
+        error = err.message;
+    } finally {
+        loading = false;
+    }
+}
+
+async function handleGoogleSignIn() {
+    error = '';
+    loading = true;
+    const provider = new GoogleAuthProvider();
+
+    try {
+        await signInWithPopup(auth, provider);
+    } catch(err) {
+        error = err.message;
+    } finally {
+        loading = false;
+    }
+}
+
+async function handleAnonSignIn() {
+    error = '';
+    loading = true;
+     provider = new GoogleAuthProvider();
+
+    try {
+        await signInAnonymously(auth);
+    } catch(err) {
+        error = err.message;
+    } finally {
+        loading = false;
+    }
+}
 
 console.log("Script Loaded!");
