@@ -1,0 +1,38 @@
+* {
+    background-color: #D3D3D3;
+}
+
+button {
+    cursor:pointer;
+}
+
+/* LOGIN */
+
+#login-buttons {
+    display: flex;
+    display: inline-block;
+    text-align: center;
+}
+
+#email-sign-in-button {
+    background-color: #fa8998;
+    padding: 5px 5px;
+    min-width: 100px;
+    margin: 10px;
+}
+
+#google-sign-in-button {
+    background-color: #9589fa;
+    padding: 5px 5px;
+    min-width: 100px;
+    margin: 10px;
+}
+
+#anon-sign-in-button {
+    background-color: #d889fa;
+    padding: 5px 5px;
+    min-width: 100px;
+    margin: 10px;
+}
+
+/* MISC */

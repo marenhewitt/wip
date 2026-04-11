@@ -1,0 +1,89 @@
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyCyNONDPMTNmi9E_cUBf7qvYERwnUlJaec",
+  authDomain: "weatherinsiderprep.firebaseapp.com",
+  projectId: "weatherinsiderprep",
+  storageBucket: "weatherinsiderprep.firebasestorage.app",
+  messagingSenderId: "955489579251",
+  appId: "1:955489579251:web:315c56fa69748aa24e4786",
+  measurementId: "G-PXHE2HST1Q"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+function loadDoc(url, func){
+    let xhttp = new XMLHttpRequest();
+    xhttp.onload = function(){
+        if (xhttp.status != 200){
+            console.log("Error");
+        } else {
+            func(xhttp.response);
+        }
+    }
+    xhttp.open("GET", url);
+    xhttp.send();
+}
+
+async function grab_location_data(){
+    //error checking for wrong zipcode format
+
+}
+
+function grab_location_data_response(){
+    location.reload();
+
+    let divResuls = document.getElementById("divResults");
+
+    temp = "test";
+
+    divResuls.innerHTML = temp;
+}
+
+
+//LOGIN
+function showError(msg) {
+    document.getElementById("error-msg").textContent = msg;
+}
+
+async function handleEmailPasswordSubmit(e){
+    e.preventDefault();
+    showError('');
+
+    const email = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    try {
+        await auth.signInWithEmailAndPassword(email, password);
+        window.location.href = "index.html";
+    } catch (err) {
+        showError(err.message);
+    }
+}
+
+async function handleGoogleSignIn() {
+    showError('');
+    const provider = new firebase.auth.GoogleAuthProvider();
+
+    try {
+        await auth.signInWithPopup(provider);
+    } catch(err) {
+        showError(err.message);
+    }
+}
+
+async function handleAnonSignIn() {
+    showError('');
+
+    try {
+        await auth.signInAnonymously();
+        window.location.href = "index.html";    
+    } catch(err) {
+        showError(err.message);
+    }
+}
+
+console.log("Script Loaded!");
