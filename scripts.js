@@ -1,5 +1,19 @@
-import { db } from "firebase.js";
-import { collection, addDoc } from "firebase/firestore";
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyCyNONDPMTNmi9E_cUBf7qvYERwnUlJaec",
+  authDomain: "weatherinsiderprep.firebaseapp.com",
+  projectId: "weatherinsiderprep",
+  storageBucket: "weatherinsiderprep.firebasestorage.app",
+  messagingSenderId: "955489579251",
+  appId: "1:955489579251:web:315c56fa69748aa24e4786",
+  measurementId: "G-PXHE2HST1Q"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
 
 function loadDoc(url, func){
     let xhttp = new XMLHttpRequest();
@@ -31,55 +45,44 @@ function grab_location_data_response(){
 
 
 //LOGIN
-let email = '';
-let password = '';
-let isSignUp = false;
-let error = '';
-let loading = false;
+function showError(msg) {
+    document.getElementById("error-msg").textContent = msg;
+}
 
 async function handleEmailPasswordSubmit(e){
     e.preventDefault();
-    error = '';
-    loading = true;
+    showError('');
+
+    const email = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
 
     try {
-        if (isSignUp){
-            await createUserWithEmailAndPassword(auth, email, password);
-        } else {
-            await signInUserWithEmailAndPassword(auth, email, password);
-        }
+        await auth.signInWithEmailAndPassword(email, password);
+        window.location.href = "index.html";
     } catch (err) {
-        error = err.message;
-    } finally {
-        loading = false;
+        showError(err.message);
     }
 }
 
 async function handleGoogleSignIn() {
-    error = '';
-    loading = true;
-    const provider = new GoogleAuthProvider();
+    showError('');
+    const provider = new firebase.auth.GoogleAuthProvider();
 
     try {
-        await signInWithPopup(auth, provider);
+        await auth.signInWithPopup(provider);
     } catch(err) {
-        error = err.message;
-    } finally {
-        loading = false;
+        showError(err.message);
     }
 }
 
 async function handleAnonSignIn() {
-    error = '';
-    loading = true;
-     provider = new GoogleAuthProvider();
+    showError('');
 
     try {
-        await signInAnonymously(auth);
+        await auth.signInAnonymously();
+        window.location.href = "index.html";    
     } catch(err) {
-        error = err.message;
-    } finally {
-        loading = false;
+        showError(err.message);
     }
 }
 
