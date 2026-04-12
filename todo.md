@@ -17,3 +17,6 @@ add a profile or settings to set up preferences and location
 for now create new account on seperate html 
 but try to move it onto same file eventually
 password confirmation field, and strength test (6+ characters) (maybe email verification but probably not)
+
+add displayname, first and last name, and zipcode to create account but would need to figure out how that works with google signup 
+maybe add the info to profile?
