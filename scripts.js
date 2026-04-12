@@ -53,8 +53,20 @@ function showError(msg) {
 //go to new page
 //input email and 2 password fields 
 //popup confirm account creation then redirect to home
-async function handleCreateAccount() {
+async function handleCreateAccount(e) {
+    e.preventDefault();
     showError('');
+
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    try {
+        const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+        console.log("Account Created");
+        window.location.href = "index.html";
+    } catch (err) {
+        showError(err.message);
+    }
 
 }
 
