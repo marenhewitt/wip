@@ -20,3 +20,5 @@ password confirmation field, and strength test (6+ characters) (maybe email veri
 
 add displayname, first and last name, and zipcode to create account but would need to figure out how that works with google signup 
 maybe add the info to profile?
+
+login to access profile

@@ -15,13 +15,15 @@
         <p>Update Your Personal Information Here</p>
         <div>
             <input type="text" id="displayname" name="displayname" placeholder="Enter Display Name">
-            <button onclick="updateDisplayName();">Go</button>
+            <button onclick="updateDisplayName(document.getElementById('displayname').value);">Go</button>
         </div> <br>
 
         <div>
             <input type="text" id="zipcode" name="zipcode" placeholder="Enter Zipcode">
-            <button onclick="grab_location_data();">Go</button>
+            <button onclick="updateSavedZipcode(document.getElementById('zipcode').value);">Go</button>
         </div>
+
+        <div id="error-msg" style="color: red; margin-top: 10px;"></div>
 
         <script src="scripts.js"></script>
     </body>

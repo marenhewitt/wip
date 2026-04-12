@@ -44,6 +44,46 @@ function grab_location_data_response(){
     divResuls.innerHTML = temp;
 }
 
+//PROFILE
+async function updateDisplayName(name) {
+    try {
+        const user = auth.currentUser;
+        if (!user) {
+            showError("No user is signed in");
+            return;
+        } 
+        if (!name || name.trim() === '') {
+            showError("Enter a display name");
+            return;
+        }
+        
+        await user.updateProfile({ displayName: name.trim() });
+        await auth.currentUser.reload();
+        console.log("Name Changed", auth.currentUser.displayName);
+    } catch (err) {
+        showError(err.message);
+    }
+}
+
+async function updateSavedZipcode(zip) {
+    try {
+        const user = auth.currentUser;
+        if (!user) {
+            showError("No user is signed in");
+            return;
+        } 
+        if (!zip || zip.trim() === '') {
+            showError("Enter a zipcode");
+            return;
+        }
+        
+        await db.collection("users").doc(user.uid).set({ zipcode: zip.trim() }, { merge: true });
+        console.log("Zip Changed", zip.trim());
+    } catch (err) {
+        showError(err.message);
+    }
+}
+
 
 //LOGIN
 function showError(msg) {
