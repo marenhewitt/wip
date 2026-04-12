@@ -3,7 +3,7 @@
     <head>
         <link rel="stylesheet" href="styles.css">
   	    <meta charset="utf-8">
-        <title>WIP Login</title>
+        <title>WIP Account Creation</title>
         <link rel="icon" type="images/png" href="images/cloud_icon.png">
 	    <meta name="viewport" content="width=device-width, initial scale=1.0">
         <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
@@ -11,29 +11,17 @@
         <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>    
     </head>
     <body>
-        <h1>Weather Insider Prep Login</h1>
+        <h1>Weather Insider Prep Account Creation</h1>
 
-        <form onsubmit="handleEmailPasswordSubmit(event);">
+        <form onsubmit="handleCreateAccount(event);">
             <label for="email">Email:</label><br>
             <input type="email" id="email" name="email"><br>
             <label for="password">Password:</label><br>
             <input type="password" id="password" name="password"><br><br>
-            <input type="submit" value="Sign In" style="cursor: pointer;"><br>
+            <input type="submit" value="Create Account" style="cursor: pointer;"><br>
         </form>
 
         <div id="error-msg" style="color: red; margin-top: 10px;"></div>
-        
-        <div>
-            <a href="createaccount.html" style="margin: 10px;">
-                <button>Create Account</button>
-            </a>        
-        </div>
-
-        <div id="login-buttons"> 
-            <button id="google-sign-in-button" onclick="handleGoogleSignIn();">Google</button><br>
-            <button id="anon-sign-in-button" onclick="handleAnonSignIn();">Anonymous</button>
-        </div>
-              
 
         <script src="scripts.js"></script>
     </body>
