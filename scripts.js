@@ -1,5 +1,5 @@
+// FireBase KEEP AT TOP
 // Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyCyNONDPMTNmi9E_cUBf7qvYERwnUlJaec",
   authDomain: "weatherinsiderprep.firebaseapp.com",
@@ -15,6 +15,7 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
+//
 function loadDoc(url, func){
     let xhttp = new XMLHttpRequest();
     xhttp.onload = function(){
@@ -49,11 +50,19 @@ function showError(msg) {
     document.getElementById("error-msg").textContent = msg;
 }
 
+//go to new page
+//input email and 2 password fields 
+//popup confirm account creation then redirect to home
+async function handleCreateAccount() {
+    showError('');
+
+}
+
 async function handleEmailPasswordSubmit(e){
     e.preventDefault();
     showError('');
 
-    const email = document.getElementById("username").value;
+    const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
     try {
