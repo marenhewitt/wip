@@ -84,7 +84,6 @@ async function updateSavedZipcode(zip) {
     }
 }
 
-
 //LOGIN
 function showError(msg) {
     document.getElementById("error-msg").textContent = msg;
@@ -146,5 +145,25 @@ async function handleAnonSignIn() {
         showError(err.message);
     }
 }
+
+//MISC
+auth.onAuthStateChanged(user => {
+    if (user) {
+        // Auto-fill any element with these ids if they exist on the page
+        const nameEl = document.getElementById("user-displayname");
+        const emailEl = document.getElementById("user-email");
+        const zipcodeEl = document.getElementById("user-zipcode");
+
+        if (nameEl) nameEl.textContent = user.displayName || "User";
+        if (emailEl) emailEl.textContent = user.email || "";
+
+        // Zipcode comes from Firestore
+        if (zipcodeEl) {
+            db.collection("users").doc(user.uid).get().then(doc => {
+                if (doc.exists) zipcodeEl.textContent = doc.data().zipcode || "";
+            });
+        }
+    }
+});
 
 console.log("Script Loaded!");
