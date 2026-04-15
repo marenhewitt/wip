@@ -16,7 +16,13 @@ def get_zipcode_data(zipcode):
     response = requests.get(url, headers=headers)
 
     if response.status_code == 200:
-        return response.json()
+        data = response.json()
+        coords = {"lat": data['lat'],
+                  "lng": data['lng']}
+        return coords
     else:
         print(f"Error {response.status_code}: {response.text}")
         return None
+    
+#test = get_zipcode_data("12345")
+#print(test)
