@@ -19,3 +19,6 @@ maybe add the info to profile?
 
 login to access profile or popup telling you to login first?
 right now anon can update profile which is bad
+
+if anon zipcode on home
+else no text bar and auto shows weather
