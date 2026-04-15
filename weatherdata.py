@@ -1,5 +1,5 @@
 import openmeteo_requests
-
+from ziptocoords import get_zipcode_data 
 import pandas as pd
 import requests_cache
 from retry_requests import retry
@@ -12,9 +12,13 @@ openmeteo = openmeteo_requests.Client(session = retry_session)
 # Make sure all required weather variables are listed here
 # The order of variables in hourly or daily is important to assign them correctly below
 url = "https://api.open-meteo.com/v1/forecast"
+
+zipcode = "12345"
+coords = get_zipcode_data(zipcode)
+
 params = {
-	"latitude": 52.52,
-	"longitude": 13.41,
+	"latitude": coords['lat'],
+	"longitude": coords['lng'],
 	"daily": ["weather_code", "temperature_2m_max", "temperature_2m_min", "sunrise", "sunset", "precipitation_hours"],
 	"hourly": ["temperature_2m", "apparent_temperature", "precipitation", "precipitation_probability", "cloud_cover", "uv_index"],
 	"current": ["temperature_2m", "apparent_temperature", "relative_humidity_2m"],
