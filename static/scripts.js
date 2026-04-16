@@ -169,20 +169,27 @@ auth.onAuthStateChanged(user => {
         const nameEl = document.getElementById("user-displayname");
         const emailEl = document.getElementById("user-email");
         const zipcodeEl = document.getElementById("user-zipcode");
+        const zipInput = document.getElementById("zip");
 
-        // Provide fallback text for Anonymous users
-        if (nameEl) nameEl.textContent = user.displayName || (user.isAnonymous ? "Guest Traveler" : "User");
+        // anonymous users
+        if (nameEl) nameEl.textContent = user.displayName || (user.isAnonymous ? "Guest" : "User");
         if (emailEl) emailEl.textContent = user.email || (user.isAnonymous ? "No email (Anonymous)" : "");
 
-        if (zipcodeEl) {
-            db.collection("users").doc(user.uid).get().then(doc => {
-                if (doc.exists) {
-                    zipcodeEl.textContent = doc.data().zipcode || "None saved";
-                } else {
-                    zipcodeEl.textContent = "None saved";
+        db.collection("users").doc(user.uid).get().then(doc => {
+            if (doc.exists) {
+                const savedZip = doc.data().zipcode;
+                const zipInput = document.getElementById("zip");
+                
+                if (document.getElementById("user-zipcode")) {
+                    document.getElementById("user-zipcode").textContent = savedZip || "None Saved";
                 }
-            });
-        }
+
+                // automatically load weather data if a zipcode is found
+                if (savedZip && zipInput && zipInput.value === "") {
+                    grab_location_data(savedZip);      // Trigger the existing weather function
+                }
+            } 
+        });
     }
 });
 
