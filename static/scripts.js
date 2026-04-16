@@ -1,6 +1,6 @@
 // FireBase KEEP AT TOP
 const firebaseConfig = {
-  apiKey: "AIzaSyCyNONDPMTNmi9E_cUBf7qvYERwnUlJaec",
+  apiKey: 'AIzaSyCyNONDPMTNmi9E_cUBf7qvYERwnUlJaec',
   authDomain: "weatherinsiderprep.firebaseapp.com",
   projectId: "weatherinsiderprep",
   storageBucket: "weatherinsiderprep.firebasestorage.app",
@@ -72,13 +72,21 @@ function grab_location_data_response(){
 }
 
 //PROFILE
+function checkAccount(){ 
+    const unsubscribe = auth.onAuthStateChanged(user => {
+        unsubscribe();
+        if (!user || user.isAnonymous) {
+            alert("Create an account or login to view profile");
+            window.location.href = '/login.html';
+        } else {
+            window.location.href = '/profile.html';
+        }
+    });
+}
+
 async function updateDisplayName(name) {
     try {
         const user = auth.currentUser;
-        if (!user) {
-            showError("No user is signed in");
-            return;
-        } 
         if (!name || name.trim() === '') {
             showError("Enter a display name");
             return;
@@ -86,7 +94,7 @@ async function updateDisplayName(name) {
         
         await user.updateProfile({ displayName: name.trim() });
         await auth.currentUser.reload();
-        console.log("Name Changed", auth.currentUser.displayName);
+        location.reload();
     } catch (err) {
         showError(err.message);
     }
@@ -95,25 +103,29 @@ async function updateDisplayName(name) {
 async function updateSavedZipcode(zip) {
     try {
         const user = auth.currentUser;
-        if (!user) {
-            showError("No user is signed in");
-            return;
-        } 
         if (!zip || zip.trim() === '') {
             showError("Enter a zipcode");
             return;
         }
         
         await db.collection("users").doc(user.uid).set({ zipcode: zip.trim() }, { merge: true });
-        console.log("Zip Changed", zip.trim());
+        location.reload();
     } catch (err) {
         showError(err.message);
     }
 }
 
 //LOGIN
+//function showError(msg) {
+  //  document.getElementById("error-msg").textContent = msg;
+//}
 function showError(msg) {
-    document.getElementById("error-msg").textContent = msg;
+    const errEl = document.getElementById("error-msg");
+    if (errEl) {
+        errEl.textContent = msg;
+    } else {
+        alert(msg);
+    }
 }
 
 //go to new page
@@ -124,11 +136,21 @@ async function handleCreateAccount(e) {
     showError('');
 
     const email = document.getElementById("email").value;
+    const displayname = document.getElementById("display").value;
+    const zipcode = document.getElementById("zip").value;
     const password = document.getElementById("password").value;
 
     try {
         const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-        console.log("Account Created");
+        const user = userCredential.user;
+
+        await db.collection("users").doc(user.uid).set({
+            displayName: displayname,
+            email: email,
+            zipcode: zipcode,
+            createdAt: new Date()
+        });
+
         window.location.href = "index.html";
     } catch (err) {
         showError(err.message);
@@ -156,7 +178,19 @@ async function handleGoogleSignIn() {
     const provider = new firebase.auth.GoogleAuthProvider();
 
     try {
-        await auth.signInWithPopup(provider);
+        const result = await auth.signInWithPopup(provider);
+        const user = result.user;
+        const email = user.email; 
+
+        await db.collection("users").doc(user.uid).set({
+            displayName: "New User",
+            zipcode: "00501",
+            email: email,
+            createdAt : new Date()
+        });
+
+        window.location.href = "index.html";
+
     } catch(err) {
         showError(err.message);
     }
@@ -176,18 +210,21 @@ async function handleAnonSignIn() {
 //MISC
 auth.onAuthStateChanged(user => {
     if (user) {
-        // Auto-fill any element with these ids if they exist on the page
         const nameEl = document.getElementById("user-displayname");
         const emailEl = document.getElementById("user-email");
         const zipcodeEl = document.getElementById("user-zipcode");
 
-        if (nameEl) nameEl.textContent = user.displayName || "User";
-        if (emailEl) emailEl.textContent = user.email || "";
+        // Provide fallback text for Anonymous users
+        if (nameEl) nameEl.textContent = user.displayName || (user.isAnonymous ? "Guest Traveler" : "User");
+        if (emailEl) emailEl.textContent = user.email || (user.isAnonymous ? "No email (Anonymous)" : "");
 
-        // Zipcode comes from Firestore
         if (zipcodeEl) {
             db.collection("users").doc(user.uid).get().then(doc => {
-                if (doc.exists) zipcodeEl.textContent = doc.data().zipcode || "";
+                if (doc.exists) {
+                    zipcodeEl.textContent = doc.data().zipcode || "None saved";
+                } else {
+                    zipcodeEl.textContent = "None saved";
+                }
             });
         }
     }
