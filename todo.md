@@ -6,19 +6,11 @@ run using this ^^ after running flask
 site formatting
 push notifications
 
-default profile name "New User"
-popup after sign up to profile to fill in info
-is there a way to distinguish between log in or create account with google? 
-
-default to setup location
 anon search bar to see weather
 user go to diff screen to change location?
 
 see if i can move scripts out of login head
 
-for now create new account on seperate html 
-but try to move it onto same file eventually
 password confirmation field, and strength test (6+ characters) (maybe email verification but probably not)
 
-if anon zipcode on home
-else no text bar and auto shows weather
+need to get weather results to display on home, focus on accounts for now if time anon too
