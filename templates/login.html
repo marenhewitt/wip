@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
   	    <meta charset="utf-8">
         <title>WIP Login</title>
-        <link rel="icon" type="images/png" href="images/cloud_icon.png">
-	    <meta name="viewport" content="width=device-width, initial scale=1.0">
+        <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/cloud_icon.png') }}">	    <meta name="viewport" content="width=device-width, initial scale=1.0">
         <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
         <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
         <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>    
@@ -24,7 +23,7 @@
         <div id="error-msg" style="color: red; margin-top: 10px;"></div>
         
         <div>
-            <a href="createaccount.html" style="margin: 10px;">
+            <a href="{{ url_for('create_account')}}" style="margin: 10px;">
                 <button>Create Account</button>
             </a>        
         </div>
@@ -35,6 +34,5 @@
         </div>
               
 
-        <script src="scripts.js"></script>
-    </body>
+        <script src="{{ url_for('static', filename='scripts.js') }}"></script>    </body>
 </html>

@@ -1,9 +1,45 @@
 import openmeteo_requests
-
+from ziptocoords import get_zipcode_data 
 import pandas as pd
 import requests_cache
 from retry_requests import retry
+from flask import Flask, request
 
+def get_weather(zipcode):
+	cache_session = requests_cache.CachedSession('.cache', expire_after = 3600)
+	retry_session = retry(cache_session, retries = 5, backoff_factor = 0.2)
+	openmeteo = openmeteo_requests.Client(session = retry_session)
+	
+	url = "https://api.open-meteo.com/v1/forecast"
+	coords = get_zipcode_data(zipcode)
+	if not coords:
+		return {"error": "INVALID ZIPCODE"}
+	
+	params = {
+		"latitude": coords['lat'],
+		"longitude": coords['lng'],
+		"daily": ["weather_code", "temperature_2m_max", "temperature_2m_min", "sunrise", "sunset", "precipitation_hours"],
+		"hourly": ["temperature_2m", "apparent_temperature", "precipitation", "precipitation_probability", "cloud_cover", "uv_index"],
+		"current": ["temperature_2m", "apparent_temperature", "relative_humidity_2m"],
+		"timezone": "auto",
+		"forecast_days": 1,
+		"wind_speed_unit": "mph",
+		"temperature_unit": "fahrenheit",
+		"precipitation_unit": "inch",
+	}
+
+	responses = openmeteo.weather_api(url, params=params)
+	response = responses[0]
+	current = response.Current()
+
+	return {
+        "temp": round(current.Variables(0).Value(), 1),
+        "feels_like": round(current.Variables(1).Value(), 1),
+        "humidity": current.Variables(2).Value(),
+        "city_coords": f"{response.Latitude()}N, {response.Longitude()}E"
+    }
+
+'''
 # Setup the Open-Meteo API client with cache and retry on error
 cache_session = requests_cache.CachedSession('.cache', expire_after = 3600)
 retry_session = retry(cache_session, retries = 5, backoff_factor = 0.2)
@@ -12,9 +48,13 @@ openmeteo = openmeteo_requests.Client(session = retry_session)
 # Make sure all required weather variables are listed here
 # The order of variables in hourly or daily is important to assign them correctly below
 url = "https://api.open-meteo.com/v1/forecast"
+
+zipcode = "12345"
+coords = get_zipcode_data(zipcode)
+
 params = {
-	"latitude": 52.52,
-	"longitude": 13.41,
+	"latitude": coords['lat'],
+	"longitude": coords['lng'],
 	"daily": ["weather_code", "temperature_2m_max", "temperature_2m_min", "sunrise", "sunset", "precipitation_hours"],
 	"hourly": ["temperature_2m", "apparent_temperature", "precipitation", "precipitation_probability", "cloud_cover", "uv_index"],
 	"current": ["temperature_2m", "apparent_temperature", "relative_humidity_2m"],
@@ -95,3 +135,4 @@ daily_data["precipitation_hours"] = daily_precipitation_hours
 
 daily_dataframe = pd.DataFrame(data = daily_data)
 print("\nDaily data\n", daily_dataframe)
+'''
