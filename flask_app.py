@@ -7,6 +7,18 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
+@app.route('/login.html')
+def login():
+    return render_template('login.html')
+
+@app.route('/profile.html')
+def profile():
+    return render_template('profile.html')
+
+@app.route('/createaccount.html')
+def create_account():
+    return render_template('createaccount.html')
+
 @app.route('/get_weather')
 def get_weather():
     zip_code = request.args.get('zip')

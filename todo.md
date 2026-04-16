@@ -1,3 +1,8 @@
+http://127.0.0.1:5000
+run using this ^^ after running flask
+
+<img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
+
 site formatting
 push notifications
 
