@@ -31,13 +31,3 @@ async function grab_location_data(passedZip) {
         divResults.innerHTML = "Failed to fetch weather data.";
     }
 }
-
-function grab_location_data_response(){
-    location.reload();
-
-    let divResuls = document.getElementById("divResults");
-
-    temp = "test";
-
-    divResuls.innerHTML = temp;
-}
