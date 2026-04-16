@@ -72,6 +72,18 @@ function grab_location_data_response(){
 }
 
 //PROFILE
+function checkAccount(){ 
+    const unsubscribe = auth.onAuthStateChanged(user => {
+        unsubscribe();
+        if (!user || user.isAnonymous) {
+            alert("Create an account or login to view profile");
+            window.location.href = '/login.html';
+        } else {
+            window.location.href = '/profile.html';
+        }
+    });
+}
+
 async function updateDisplayName(name) {
     try {
         const user = auth.currentUser;
@@ -112,8 +124,16 @@ async function updateSavedZipcode(zip) {
 }
 
 //LOGIN
+//function showError(msg) {
+  //  document.getElementById("error-msg").textContent = msg;
+//}
 function showError(msg) {
-    document.getElementById("error-msg").textContent = msg;
+    const errEl = document.getElementById("error-msg");
+    if (errEl) {
+        errEl.textContent = msg;
+    } else {
+        alert(msg);
+    }
 }
 
 //go to new page
@@ -176,18 +196,21 @@ async function handleAnonSignIn() {
 //MISC
 auth.onAuthStateChanged(user => {
     if (user) {
-        // Auto-fill any element with these ids if they exist on the page
         const nameEl = document.getElementById("user-displayname");
         const emailEl = document.getElementById("user-email");
         const zipcodeEl = document.getElementById("user-zipcode");
 
-        if (nameEl) nameEl.textContent = user.displayName || "User";
-        if (emailEl) emailEl.textContent = user.email || "";
+        // Provide fallback text for Anonymous users
+        if (nameEl) nameEl.textContent = user.displayName || (user.isAnonymous ? "Guest Traveler" : "User");
+        if (emailEl) emailEl.textContent = user.email || (user.isAnonymous ? "No email (Anonymous)" : "");
 
-        // Zipcode comes from Firestore
         if (zipcodeEl) {
             db.collection("users").doc(user.uid).get().then(doc => {
-                if (doc.exists) zipcodeEl.textContent = doc.data().zipcode || "";
+                if (doc.exists) {
+                    zipcodeEl.textContent = doc.data().zipcode || "None saved";
+                } else {
+                    zipcodeEl.textContent = "None saved";
+                }
             });
         }
     }
