@@ -13,4 +13,4 @@ see if i can move scripts out of login head
 
 password confirmation field, and strength test (6+ characters) (maybe email verification but probably not)
 
-need to get weather results to display on home, focus on accounts for now if time anon too
+get default location button to work 
