@@ -186,7 +186,7 @@ auth.onAuthStateChanged(user => {
 
                 // automatically load weather data if a zipcode is found
                 if (savedZip && zipInput && zipInput.value === "") {
-                    grab_location_data(savedZip);      // Trigger the existing weather function
+                    grab_location_data(savedZip); 
                 }
             } 
         });
