@@ -15,10 +15,19 @@
         <form onsubmit="handleCreateAccount(event);">
             <label for="email">Email:</label><br>
             <input type="email" id="email" name="email"><br>
+            <label for="text">Display Name:</label><br>
+            <input type="text" id="display" name="display"><br>
+            <label for="text">Zipcode:</label><br>
+            <input type="text" id="zip" name="zip"><br>
             <label for="password">Password:</label><br>
             <input type="password" id="password" name="password"><br><br>
             <input type="submit" value="Create Account" style="cursor: pointer;"><br>
         </form>
+
+        <br>
+        <a href="{{ url_for('login')}}" style="margin: 10px;">
+            <button>Back</button>
+        </a>
 
         <div id="error-msg" style="color: red; margin-top: 10px;"></div>
 

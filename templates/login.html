@@ -32,6 +32,11 @@
             <button id="google-sign-in-button" onclick="handleGoogleSignIn();">Google</button><br>
             <button id="anon-sign-in-button" onclick="handleAnonSignIn();">Anonymous</button>
         </div>
+    
+        <br>
+        <a href="{{ url_for('index')}}" style="margin: 10px;">
+            <button>Back</button>
+        </a>
               
 
         <script src="{{ url_for('static', filename='scripts.js') }}"></script>    </body>

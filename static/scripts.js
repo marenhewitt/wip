@@ -1,6 +1,6 @@
 // FireBase KEEP AT TOP
 const firebaseConfig = {
-  apiKey: "AIzaSyCyNONDPMTNmi9E_cUBf7qvYERwnUlJaec",
+  apiKey: 'AIzaSyCyNONDPMTNmi9E_cUBf7qvYERwnUlJaec',
   authDomain: "weatherinsiderprep.firebaseapp.com",
   projectId: "weatherinsiderprep",
   storageBucket: "weatherinsiderprep.firebasestorage.app",
@@ -87,10 +87,6 @@ function checkAccount(){
 async function updateDisplayName(name) {
     try {
         const user = auth.currentUser;
-        if (!user) {
-            showError("No user is signed in");
-            return;
-        } 
         if (!name || name.trim() === '') {
             showError("Enter a display name");
             return;
@@ -98,7 +94,7 @@ async function updateDisplayName(name) {
         
         await user.updateProfile({ displayName: name.trim() });
         await auth.currentUser.reload();
-        console.log("Name Changed", auth.currentUser.displayName);
+        location.reload();
     } catch (err) {
         showError(err.message);
     }
@@ -107,17 +103,13 @@ async function updateDisplayName(name) {
 async function updateSavedZipcode(zip) {
     try {
         const user = auth.currentUser;
-        if (!user) {
-            showError("No user is signed in");
-            return;
-        } 
         if (!zip || zip.trim() === '') {
             showError("Enter a zipcode");
             return;
         }
         
         await db.collection("users").doc(user.uid).set({ zipcode: zip.trim() }, { merge: true });
-        console.log("Zip Changed", zip.trim());
+        location.reload();
     } catch (err) {
         showError(err.message);
     }
