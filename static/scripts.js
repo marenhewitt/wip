@@ -136,11 +136,21 @@ async function handleCreateAccount(e) {
     showError('');
 
     const email = document.getElementById("email").value;
+    const displayname = document.getElementById("display").value;
+    const zipcode = document.getElementById("zip").value;
     const password = document.getElementById("password").value;
 
     try {
         const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-        console.log("Account Created");
+        const user = userCredential.user;
+
+        await db.collection("users").doc(user.uid).set({
+            displayName: displayname,
+            email: email,
+            zipcode: zipcode,
+            createdAt: new Date()
+        });
+
         window.location.href = "index.html";
     } catch (err) {
         showError(err.message);
@@ -168,7 +178,19 @@ async function handleGoogleSignIn() {
     const provider = new firebase.auth.GoogleAuthProvider();
 
     try {
-        await auth.signInWithPopup(provider);
+        const result = await auth.signInWithPopup(provider);
+        const user = result.user;
+        const email = user.email; 
+
+        await db.collection("users").doc(user.uid).set({
+            displayName: "New User",
+            zipcode: "00501",
+            email: email,
+            createdAt : new Date()
+        });
+
+        window.location.href = "index.html";
+
     } catch(err) {
         showError(err.message);
     }

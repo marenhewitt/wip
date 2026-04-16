@@ -20,8 +20,5 @@ for now create new account on seperate html
 but try to move it onto same file eventually
 password confirmation field, and strength test (6+ characters) (maybe email verification but probably not)
 
-login to access profile or popup telling you to login first?
-right now anon can update profile which is bad
-
 if anon zipcode on home
 else no text bar and auto shows weather
