@@ -24,12 +24,11 @@
         <div>
             <input type="text" id="zip" name="zipcode" placeholder="Enter Zipcode Here">
             <button onclick="grab_location_data();">Go</button>
-            <button onclick="grab_location_data();">Default Location</button>
+            <button onclick="grab_default_data();">Default Location</button>
         </div>
                 
         <div id="divResults"></div>
 
-        <script src="{{ url_for('static', filename='scripts.js') }}"></script>
         <script src="{{ url_for('static', filename='weatherscripts.js') }}"></script>
     </body>
 </html>
