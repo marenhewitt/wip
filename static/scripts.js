@@ -163,6 +163,14 @@ async function handleAnonSignIn() {
     }
 }
 
+async function logout() {
+    try {
+        firebase.auth().signOut();
+    } catch {
+        showError(err.message);
+    }
+}
+
 //MISC
 auth.onAuthStateChanged(user => {
     if (user) {

@@ -32,6 +32,12 @@
             <button>Return to Home</button>
         </a>
 
+        <br><br>
+
+        <a href="{{ url_for('login')}}" style="margin: 10px;">
+            <button onclick="logout();">Logout</button>
+        </a>
+
         <script src="{{ url_for('static', filename='scripts.js') }}"></script>
     </body>
 </html>
