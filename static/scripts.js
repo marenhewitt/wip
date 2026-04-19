@@ -95,6 +95,12 @@ async function handleCreateAccount(e) {
     const displayname = document.getElementById("display").value;
     const zipcode = document.getElementById("zip").value;
     const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("password2").value;
+
+    if (password != confirmPassword) {
+        alert("Passwords do not match. Try again.");
+        return;
+    }
 
     try {
         const userCredential = await auth.createUserWithEmailAndPassword(email, password);
