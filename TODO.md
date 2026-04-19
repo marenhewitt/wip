@@ -5,6 +5,7 @@ run using this ^^ after running flask
 
 site formatting
 push notifications
+log out button (not just anon)
 
 anon search bar to see weather
 user go to diff screen to change location?
