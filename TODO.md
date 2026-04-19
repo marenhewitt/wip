@@ -5,13 +5,7 @@ run using this ^^ after running flask
 
 site formatting
 push notifications
-log out button (not just anon)
-
-anon search bar to see weather
-user go to diff screen to change location?
-
-see if i can move scripts out of login head
 
 password confirmation field, and strength test (6+ characters) (maybe email verification but probably not)
 
-get default location button to work 
+change the weather data returned add likely maybe remove coords, would be nice if it was graphical/in table
