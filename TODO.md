@@ -6,7 +6,8 @@ run using this ^^ after running flask
 site formatting
 push notifications
 
-password confirmation field, and strength test (6+ characters) (maybe email verification but probably not)
+password strength test (special character and number) 
+maybe email verification but probably not
 
 change the weather data returned add likely maybe remove coords, would be nice if it was graphical/in table
 
