@@ -97,6 +97,11 @@ async function handleCreateAccount(e) {
     const password = document.getElementById("password").value;
     const confirmPassword = document.getElementById("password2").value;
 
+    if (password.len() < 6) { 
+        alert("Password too weak. Password should be at least 6 characters");
+        return;
+    }
+
     if (password != confirmPassword) {
         alert("Passwords do not match. Try again.");
         return;

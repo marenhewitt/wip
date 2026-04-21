@@ -3,3 +3,5 @@ node_modules
 .env
 .cache.sqlite
 __pycache__
+flask_session
+weatherinsiderprep-firebase-adminsdk.json

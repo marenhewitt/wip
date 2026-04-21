@@ -16,16 +16,40 @@ async function grab_location_data(passedZip) {
 
         if (data.error) {
             divResults.innerHTML = `Error: ${data.error}`;
-        } else {
-            divResults.innerHTML = `
-                <h3>Current Weather</h3>
-                <p>Temperature: ${data.temp}°F</p>
-                <p>Feels Like: ${data.feels_like}°F</p>
-                <p>Humidity: ${data.humidity}%</p>
-                <small>Location: ${data.city_coords}</small>
-            `;
-            document.getElementById("zip").value = "";
+            return;
+        } 
+        
+        divResults.innerHTML = `
+            <h3>Current Weather</h3>
+            <p>Time: ${new Date(data.current.time * 1000).toLocaleString()}</p>
+            <p>Temperature: ${data.current.temp}°F</p>
+            <p>Feels Like: ${data.current.feels_like}°F</p>
+            <p>Humidity: ${data.current.humidity}%</p>
+            <hr>
+        `;
+
+// next 5 hours / needs formatting to show time not elapsed
+        let hourlyHtml = '<h4>Hourly Forecast</h4><ul>';
+        for (let i = 0; i < 5; i++) {
+            const time = data.hourly.times[i].split('T')[1].slice(0, 5);
+            const temp = data.hourly.temp[i];
+            hourlyHtml += `<li>${time}: ${temp}°F</li>`;
         }
+        hourlyHtml += '</ul>';
+        divResults.innerHTML += hourlyHtml;
+
+// daily
+        let dailyHtml = '<h4>Daily Forecast</h4><ul>';
+        data.daily.dates.forEach((date, index) => {
+            const day = new Date(date).toLocaleDateString();
+            const max = data.daily.temp_max[index];
+            const min = data.daily.temp_min[index];
+            dailyHtml += `<li>${day}: High ${max}°F / Low ${min}°F</li>`;
+        });
+        dailyHtml += '</ul>';
+        divResults.innerHTML += dailyHtml;
+            
+        document.getElementById("zip").value = "";
     } catch (err) {
         console.error(err);
         divResults.innerHTML = "Failed to fetch weather data.";
