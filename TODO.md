@@ -1,5 +1,6 @@
 http://127.0.0.1:5000
 run using this ^^ after running flask
+if localhost gets interrupted 403 turn off airplay in system settings theyre conflicting on port 5000
 
 <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
 
