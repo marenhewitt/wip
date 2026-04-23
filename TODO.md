@@ -5,7 +5,7 @@ if localhost gets interrupted 403 turn off airplay in system settings theyre con
 <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
 
 site formatting
-push notifications
+push notifications / widget one or other
 
 password strength test (special character and number) 
 maybe email verification but probably not
@@ -17,3 +17,9 @@ my credentials and zip keep auto filling even when creating account need to see 
 check system if email is already attatched to account
 
 cookies might not be working? its hard to tell with localhost. keep sign in should be working but keep testing
+
+temp for clothing suggestions and  rain
+
+https://firebase.google.com/docs/cloud-messaging
+
+checkout tab wont save data and alert 
