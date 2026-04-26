@@ -5,3 +5,5 @@ node_modules
 __pycache__
 flask_session
 weatherinsiderprep-firebase-adminsdk.json
+.firebase/
+firebase-debug.log
