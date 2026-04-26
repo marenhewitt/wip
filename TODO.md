@@ -23,3 +23,5 @@ temp for clothing suggestions and  rain
 https://firebase.google.com/docs/cloud-messaging
 
 checkout tab wont save data and alert 
+
+profile turn on off notifs 
