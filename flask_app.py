@@ -1,7 +1,7 @@
 from flask import Flask, redirect, request, render_template, jsonify, make_response, session
 from flask_session import Session
 import firebase_admin
-from firebase_admin import credentials, firestore
+from firebase_admin import credentials, firestore, messaging
 import weatherdata
 
 cred = credentials.Certificate('weatherinsiderprep-firebase-adminsdk.json')
@@ -86,6 +86,18 @@ def get_weather():
     zip_code = request.args.get('zip')
     data = weatherdata.get_weather(zip_code)
     return jsonify(data)
+
+#notifs
+def send_daily_notification(token, weather_summary):
+    message = messaging.Message(
+        notification=messaging.Notification(
+            title='Your Daily Weather Update',
+            body=f"Today's forecast: {weather_summary}",
+        ),
+        token=token,
+    )
+    response = messaging.send(message)
+    print('Successfully sent message:', response)
 
 if __name__ == '__main__':
     app.run(debug=True)

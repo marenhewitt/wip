@@ -1,8 +1,10 @@
 import { getMessaging, getToken } from "firebase/messaging";
 
 const messaging = getMessaging();
+require('dotenv').config();
+const vapidKey = process.env.VAPID_KEY;
 
-getToken(messaging, {vapidKey: "BC84xt4kNQgj1s3qzje7wuD5ZHjJ2SNMFlxzi2YTiRgCO3GlWEHxE8VE7F-_5CC0CNCChv9yyoSGTnS8kCoUwwM"});
+getToken(messaging, {vapidKey: vapidKey});
 
 function requestPermission() {
     console.log('Requesting permission...');
