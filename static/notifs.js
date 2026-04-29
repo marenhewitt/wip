@@ -21,12 +21,13 @@ async function notifsPerm() {
             if (token) {
                 const user = firebase.auth().currentUser;
                 if (user) {
+                    //console.log("Saving token: ", user.uid);
                     await firebase.firestore().collection("users").doc(user.uid).set({
                         fcmToken: token
                     }, { merge: true });
                     
-                    document.getElementById("notif-btn").textContent = "Notifications Enabled";
-                    document.getElementById("notif-btn").disabled = true;
+                    //document.getElementById("notif-btn-on").textContent = "Notifications Enabled";
+                    //document.getElementById("notif-btn-on").disabled = true;
                     console.log("Token saved:", token);
                 }
             }
@@ -35,5 +36,31 @@ async function notifsPerm() {
         }
     } catch (err) {
         console.error("Setup Error:", err);
+    }
+}
+
+async function disableNotifs() {
+    try {
+        const messaging = firebase.messaging();
+        
+        // 1. Tell Firebase to invalidate this token
+        await messaging.deleteToken();
+        console.log("Token deleted from Firebase");
+
+        // 2. Remove the token from the User's Firestore document
+        const user = firebase.auth().currentUser;
+        if (user) {
+            await firebase.firestore().collection("users").doc(user.uid).update({
+                fcmToken: firebase.firestore.FieldValue.delete()
+            });
+            
+            alert("Notifications disabled.");
+            
+            // 3. Reset UI buttons
+            document.getElementById("notif-btn-on").disabled = false;
+            document.getElementById("notif-btn-on").textContent = "Enable";
+        }
+    } catch (err) {
+        console.error("Error disabling notifications:", err);
     }
 }

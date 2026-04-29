@@ -97,7 +97,7 @@ async function handleCreateAccount(e) {
     const password = document.getElementById("password").value;
     const confirmPassword = document.getElementById("password2").value;
 
-    if (password.len() < 6) { 
+    if (password.length < 6) { 
         alert("Password too weak. Password should be at least 6 characters");
         return;
     }
@@ -188,26 +188,65 @@ auth.onAuthStateChanged(user => {
         const nameEl = document.getElementById("user-displayname");
         const emailEl = document.getElementById("user-email");
         const zipcodeEl = document.getElementById("user-zipcode");
-        const zipInput = document.getElementById("zip");
+        //const zipInput = document.getElementById("zip");
+        const statusEl = document.getElementById("user-notification");
+        const onBtn = document.getElementById("notif-btn-on");
 
         // anonymous users
         if (nameEl) nameEl.textContent = user.displayName || (user.isAnonymous ? "Guest" : "User");
         if (emailEl) emailEl.textContent = user.email || (user.isAnonymous ? "No email (Anonymous)" : "");
 
-        db.collection("users").doc(user.uid).get().then(doc => {
+        db.collection("users").doc(user.uid).onSnapshot((doc) => {
             if (doc.exists) {
                 const savedZip = doc.data().zipcode;
-                const zipInput = document.getElementById("zip");
-                
-                if (document.getElementById("user-zipcode")) {
-                    document.getElementById("user-zipcode").textContent = savedZip || "None Saved";
+                //const zipInput = document.getElementById("zip");
+                const data = doc.data();
+                const hasToken = data.fcmToken;
+
+                if (statusEl) {
+                    statusEl.textContent = hasToken ? "On" : "Off";
+                    //statusEl.style.color = hasToken ? "green" : "red";
                 }
 
-                // automatically load weather data if a zipcode is found
-                if (savedZip && zipInput && zipInput.value === "") {
-                    grab_location_data(savedZip); 
+                if (onBtn) {
+                    if (hasToken) {
+                        onBtn.textContent = "Enabled";
+                        onBtn.disabled = true;
+                    } else {
+                        onBtn.textContent = "Enabled";
+                        onBtn.disabled = false;                    
+                    }
                 }
+
+                if (zipcodeEl) {
+                    zipcodeEl.textContent = savedZip || "None Saved";
+                }
+                
+                //if (document.getElementById("user-zipcode")) {
+                //    document.getElementById("user-zipcode").textContent = savedZip || "None Saved";
+                //}
+
+                // automatically load weather data if a zipcode is found
+                //if (savedZip && zipInput && zipInput.value === "") {
+                //    grab_location_data(savedZip); 
+                //}
             } 
+
+            // Check if the token field exists and is not empty
+            //const hasToken = doc.data().fcmToken;
+            //const notifStatusEl = document.getElementById("user-notification");
+
+            //if (notifStatusEl) {
+            //    notifStatusEl.textContent = hasToken ? "On" : "Off";
+            //    notifStatusEl.style.color = hasToken ? "green" : "red";
+            //}
+
+            // Optional: Automatically disable the "Enable" button if already on
+            //if (hasToken && document.getElementById("notif-btn-on")) {
+            //    document.getElementById("notif-btn-on").textContent = "Enabled";
+            //    document.getElementById("notif-btn-on").disabled = true;
+            //}
+                        
         });
     }
 });
