@@ -99,5 +99,9 @@ def send_daily_notification(token, weather_summary):
     response = messaging.send(message)
     print('Successfully sent message:', response)
 
+@app.route('/firebase-messaging-sw.js')
+def service_worker():
+    return app.send_static_file('firebase-messaging-sw.js')
+
 if __name__ == '__main__':
     app.run(debug=True)

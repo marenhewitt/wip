@@ -210,24 +210,10 @@ auth.onAuthStateChanged(user => {
             } 
         });
     }
-
-    // Add this inside your auth.onAuthStateChanged block
-    getToken(messaging, { vapidKey: vapidKey }).then((currentToken) => {
-        if (currentToken) {
-            // Send token to your Flask server via fetch or update Firestore directly
-            const user = auth.currentUser;
-            if (user) {
-                db.collection("users").doc(user.uid).set({
-                    fcmToken: currentToken
-                }, { merge: true });
-            }
-        }
-    });
 });
 
 
 //notifications
-require('dotenv').config();
-const vapidKey = process.env.VAPID_KEY;
+
 
 console.log("Script Loaded!");
