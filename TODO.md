@@ -25,3 +25,5 @@ https://firebase.google.com/docs/cloud-messaging
 checkout tab wont save data and alert 
 
 profile turn on off notifs 
+
+/functions/index.js for notification

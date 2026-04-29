@@ -16,6 +16,8 @@
         <p>Email: <span id="user-email"></span></p>
         <p>Saved Zipcode: <span id="user-zipcode"></span></p>
         
+        <hr>
+
         <div>
             <input type="text" id="displayname" name="displayname" placeholder="Enter Display Name">
             <button onclick="updateDisplayName(document.getElementById('displayname').value);">Go</button>
@@ -24,7 +26,15 @@
         <div>
             <input type="text" id="zipcode" name="zipcode" placeholder="Enter Zipcode">
             <button onclick="updateSavedZipcode(document.getElementById('zipcode').value);">Go</button>
-        </div>
+        </div> <br>
+
+        <div>
+            <label for="notifs">Notifications</label>
+            <select name="notifs">
+                <option value="on">On</option>
+                <option value="off">Off</option>
+            </select>
+        </div> <hr>
 
         <div id="error-msg" style="color: red; margin-top: 10px;"></div>
 
