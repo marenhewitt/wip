@@ -52,6 +52,7 @@ exports.dailyWeatherNotification = onSchedule("0 8 * * *", async (event) => {
         if (token && zip) {
             try {
                 // Fetching weather (replace with your actual API key)
+                // leaving this for last bc idek what to put in notif 
                 const weatherRes = await axios.get(`https://api.openweathermap.org/data/2.5/weather?zip=${zip},us&appid=YOUR_API_KEY&units=imperial`);
                 const temp = Math.round(weatherRes.data.main.temp);
                 const desc = weatherRes.data.weather[0].description;
