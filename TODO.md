@@ -27,3 +27,9 @@ checkout tab wont save data and alert
 profile turn on off notifs button + text
 
 /functions/index.js for notification
+-
+finished ui proto
+screen + electornic parts arrived 05/01
+will begin assemblying and final messurments 
+finish 3d sculpting frame cloud and print first proto Monday.
+finish coding ui 
