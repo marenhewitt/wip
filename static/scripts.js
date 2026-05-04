@@ -252,7 +252,15 @@ auth.onAuthStateChanged(user => {
 });
 
 
-//notifications
+//checkout
+function checkout() {
+    try {
+        alert("Order Recieved!")
+        window.location.href = "profile.html" 
+    } catch(err) {
+        showError(err.message);
+    }
+}
 
 
 console.log("Script Loaded!");
