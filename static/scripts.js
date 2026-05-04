@@ -253,9 +253,10 @@ auth.onAuthStateChanged(user => {
 
 
 //checkout
-function checkout() {
+function checkout(e) {
+    if (e) e.preventDefault();
     try {
-        alert("Order Recieved!")
+        alert("Order Recieved! Redirecting to profile")
         window.location.href = "profile.html" 
     } catch(err) {
         showError(err.message);
