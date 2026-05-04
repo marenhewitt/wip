@@ -252,7 +252,16 @@ auth.onAuthStateChanged(user => {
 });
 
 
-//notifications
+//checkout
+function checkout(e) {
+    if (e) e.preventDefault();
+    try {
+        alert("Order Recieved! Redirecting to profile")
+        window.location.href = "profile.html" 
+    } catch(err) {
+        showError(err.message);
+    }
+}
 
 
 console.log("Script Loaded!");

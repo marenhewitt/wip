@@ -70,6 +70,10 @@ def login():
 def profile():
     return render_template('profile.html')
 
+@app.route('/checkout.html')
+def checkout():
+    return render_template('checkout.html')
+
 @app.route('/createaccount.html')
 def create_account():
     return render_template('createaccount.html')

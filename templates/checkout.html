@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  	    <meta charset="utf-8">
+        <title>WIP Checkout</title>
+        <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/cloud_icon.png') }}">	    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    </head>
+    <body>
+        <h1>Weather Insider Prep Checkout</h1>
+
+        <a href="{{ url_for('profile')}}" style="margin: 10px;">
+            <button>Back</button>
+        </a> <hr>
+
+        <form name="order" onsubmit="checkout(event);">
+            <h3>Contact Information</h3>
+            <input type="text" id="fname" name="fname" placeholder="First Name" required><br><br>
+            <input type="text" id="lname" name="lname" placeholder="Last Name" required><br><br>
+            <input type="text" id="phonenum" name="phonenum" placeholder="Phone Number" required><br><br>
+            <input type="text" id="shipemail" name="shipemail" placeholder="Email" required><br>
+
+            <h3>Shipping</h3>
+            <input type="text" id="address" name="address" placeholder="Address Line 1" required><br><br>
+            <input type="text" id="address2" name="address2" placeholder="Address Line 2 (optional)"><br><br>
+            <input type="text" id="city" name="city" placeholder="City" required><br><br>
+            <input type="text" id="state" name="state" placeholder="State" required=><br><br>
+            <input type="text" id="shipzip" name="shipzip" placeholder="Zipcode" required>
+        
+            <h3>Payment</h3>
+            <input type="text" id="cardname" name="cardname" placeholder="Cardholder Name" required><br><br>
+            <input type="text" id="cardnum" name="cardnum" placeholder="Card Number" required><br><br>
+            <input type="text" id="expdate" name="expdate" placeholder="Expiry Date" required><br><br>
+            <input type="text" id="seccode" name="seccode" placeholder="Security Code" required><br><br>
+
+            <hr>
+
+            <div id="checkoutbox">
+                <h3>Order Summary</h3>
+                <h4>Total $99.99</h4>
+            </div>
+
+            <input type="submit" value="Checkout">
+
+        </form>              
+
+        <script src="{{ url_for('static', filename='scripts.js') }}"></script>    </body>
+</html>
