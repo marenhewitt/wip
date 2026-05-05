@@ -1,17 +1,15 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-  	    <meta charset="utf-8">
-        <title>WIP Profile</title>
-        <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/cloud_icon.png') }}">	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>    
-    </head>
-    <body>
-        <h1>Weather Insider Prep Profile</h1>
-        <p>Update Your Personal Information Here</p>
+{% extends "base.html" %}
+
+{% block title %}WIP Profile{% endblock %}
+
+{% block head %}
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging-compat.js"></script>
+{% endblock %}
+
+{% block content %}
+    <h1>Profile</h1>
+
+    <div class="page-content">
         <p>Welcome, <span id="user-displayname"></span>!</p>
         <p>Email: <span id="user-email"></span></p>
         <p>Saved Zipcode: <span id="user-zipcode"></span></p>
@@ -19,41 +17,32 @@
         <hr>
 
         <div>
-            <input type="text" id="displayname" name="displayname" placeholder="Enter Display Name">
-            <button onclick="updateDisplayName(document.getElementById('displayname').value);">Go</button>
-        </div> <br>
+            <input type="text" id="displayname" placeholder="Enter Display Name">
+            <button onclick="updateDisplayName(document.getElementById('displayname').value);" class="btn-secondary">Go</button>
+        </div><br>
 
         <div>
-            <input type="text" id="zipcode" name="zipcode" placeholder="Enter Zipcode">
-            <button onclick="updateSavedZipcode(document.getElementById('zipcode').value);">Go</button>
-        </div> <br>
+            <input type="text" id="zipcode" placeholder="Enter Zipcode">
+            <button onclick="updateSavedZipcode(document.getElementById('zipcode').value);" class="btn-secondary">Go</button>
+        </div><br>
 
         <div id="notif-section">
             <label>Notifications: </label>
-            <button id="notif-btn-on" onclick="notifsPerm()">Enable</button>
-            <button id="notif-btn-off" onclick="disableNotifs()">Disable</button>
-        </div> <hr>
+            <button id="notif-btn-on" onclick="notifsPerm()" class="btn-secondary">Enable</button>
+            <button id="notif-btn-off" onclick="disableNotifs()" class="btn-secondary">Disable</button>
+        </div>
 
-        <div id="error-msg" style="color: red; margin-top: 10px;"></div>
+        <hr>
+        <div id="error-msg"></div>
+        <br>
 
-        <a href="{{ url_for('checkout')}}" style="margin: 10px;">
-            <button>Buy Display Here</button>
+        <a href="{{ url_for('login') }}">
+            <button onclick="logout();" class="btn-secondary">Logout</button>
         </a>
+    </div>
+{% endblock %}
 
-        <br><br>
-
-        <a href="{{ url_for('index')}}" style="margin: 10px;">
-            <button>Return to Home</button>
-        </a>
-
-        <br><br>
-
-        <a href="{{ url_for('login')}}" style="margin: 10px;">
-            <button onclick="logout();">Logout</button>
-        </a>
-
-        <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging-compat.js"></script>
-        <script src="{{ url_for('static', filename='scripts.js') }}"></script>
-        <script src="{{ url_for('static', filename='notifs.js') }}"></script>
-    </body>
-</html>
+{% block scripts %}
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+    <script src="{{ url_for('static', filename='notifs.js') }}"></script>
+{% endblock %}

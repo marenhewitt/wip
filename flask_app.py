@@ -1,12 +1,12 @@
 from flask import Flask, redirect, request, render_template, jsonify, make_response, session
 from flask_session import Session
-# import firebase_admin
-# from firebase_admin import credentials, firestore, messaging
+import firebase_admin
+from firebase_admin import credentials, firestore, messaging
 import weatherdata
 
-# cred = credentials.Certificate('weatherinsiderprep-firebase-adminsdk.json')
-# firebase_admin.initialize_app(cred)
-# db = firestore.client()
+cred = credentials.Certificate('weatherinsiderprep-firebase-adminsdk.json')
+firebase_admin.initialize_app(cred)
+db = firestore.client()
 
 app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = False

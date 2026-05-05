@@ -16,15 +16,15 @@
 
         <nav class="bottom-nav">
             <a href="{{ url_for('index') }}" class="nav-item {% if request.endpoint == 'index' %}active{% endif %}">
-                <span class="nav-icon">🏠</span>
+                <img src="{{ url_for('static', filename='images/home.svg') }}" width="24" height="24">
                 <span>Home</span>
             </a>
-            <a href="#" class="nav-item">
-                <span class="nav-icon">🛒</span>
+            <a href="{{ url_for('checkout') }}" class="nav-item {% if request.endpoint == 'checkout' %}active{% endif %}">
+                <img src="{{ url_for('static', filename='images/purchase.svg') }}" width="24" height="24">
                 <span>Cloud Purchase</span>
             </a>
             <a href="{{ url_for('profile') }}" class="nav-item {% if request.endpoint == 'profile' %}active{% endif %}">
-                <span class="nav-icon">⚙️</span>
+                <img src="{{ url_for('static', filename='images/account.svg') }}" width="24" height="24">
                 <span>Settings</span>
             </a>
         </nav>

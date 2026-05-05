@@ -1,44 +1,37 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-  	    <meta charset="utf-8">
-        <title>WIP Login</title>
-        <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/cloud_icon.png') }}">	    <meta name="viewport" content="width=device-width, initial scale=1.0">
-        <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>    
-    </head>
-    <body>
-        <h1>Weather Insider Prep Login</h1>
+{% extends "base.html" %}
 
+{% block title %}WIP Login{% endblock %}
+
+{% block content %}
+    <h1>Login</h1>
+
+    <div class="page-content">
         <form onsubmit="handleEmailPasswordSubmit(event);">
-            <label for="email">Email:</label><br>
-            <input type="email" id="email" name="email"><br>
-            <label for="password">Password:</label><br>
-            <input type="password" id="password" name="password"><br><br>
-            <input type="submit" value="Sign In" style="cursor: pointer;"><br>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password">
+            <input type="submit" value="Sign In" class="btn-primary">
         </form>
-        <p>Keep Me Signed In:<input type="checkbox" id="remember"/></p><br>
 
-        <div id="error-msg" style="color: red; margin-top: 10px;"></div>
-        
-        <div>
-            <a href="{{ url_for('create_account')}}" style="margin: 10px;">
-                <button>Create Account</button>
-            </a>        
-        </div>
+        <p>Keep Me Signed In: <input type="checkbox" id="remember"/></p>
 
-        <div id="login-buttons"> 
-            <button id="google-sign-in-button" onclick="handleGoogleSignIn();">Google</button><br>
+        <div id="error-msg"></div>
+
+        <a href="{{ url_for('create_account') }}">
+            <button class="btn-secondary">Create Account</button>
+        </a>
+
+        <div id="login-buttons">
+            <button id="google-sign-in-button" onclick="handleGoogleSignIn();">
+                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18" height="18">
+                Continue with Google
+            </button>
             <button id="anon-sign-in-button" onclick="handleAnonSignIn();">Anonymous</button>
         </div>
-    
-        <br>
-        <a href="{{ url_for('index')}}" style="margin: 10px;">
-            <button>Home</button>
-        </a>
-              
+    </div>
+{% endblock %}
 
-        <script src="{{ url_for('static', filename='scripts.js') }}"></script>    </body>
-</html>
+{% block scripts %}
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+{% endblock %}

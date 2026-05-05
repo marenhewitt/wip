@@ -1,34 +1,19 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-  	    <meta charset="utf-8">
-        <title>Weather Insider Prep</title>
-        <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/cloud_icon.png') }}">
-        <meta name="viewport" content="width=device-width, initial scale=1.0">
-        <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-        <script src="{{ url_for('static', filename='scripts.js') }}"></script>
-    </head>
-    <body>
-        <h1>Weather Insider Prep</h1>
+{% extends "base.html" %}
 
-        <a href="{{ url_for('login')}}" style="margin: 10px;">
-            <button>Login Page</button>
-        </a> <br><hr>
-        <a style="margin: 10px;">
-            <button onclick="checkAccount();">Profile</button>
-        </a> <br><hr>
+{% block title %}Weather Insider Prep{% endblock %}
 
-        <div>
-            <input type="text" id="zip" name="zipcode" placeholder="Enter Zipcode Here">
-            <button onclick="grab_location_data();">Go</button>
-            <button onclick="grab_default_data();">Default Location</button>
-        </div>
-                
-        <div id="divResults"></div>
+{% block content %}
+    <h1>Weather Insider Prep</h1>
 
-        <script src="{{ url_for('static', filename='weatherscripts.js') }}"></script>
-    </body>
-</html>
+    <div style="display: flex; gap: 10px; align-items: center;">
+        <input type="text" id="zip" name="zipcode" placeholder="Enter Zipcode Here" style="flex: 1; min-width: 120px; margin-bottom: 0;">
+        <button onclick="grab_location_data();" class="btn-primary" style="width: auto; padding: 14px 24px;">Go</button>
+        <button onclick="grab_default_data();" class="btn-secondary" style="width: auto; padding: 14px 24px;">Default Location</button>
+    </div>
+
+    <div id="divResults"></div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='weatherscripts.js') }}"></script>
+{% endblock %}

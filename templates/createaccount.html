@@ -1,39 +1,33 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-  	    <meta charset="utf-8">
-        <title>WIP Account Creation</title>
-        <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/cloud_icon.png') }}">	    <meta name="viewport" content="width=device-width, initial scale=1.0">
-        <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>    
-    </head>
-    <body>
-        <h1>Weather Insider Prep Account Creation</h1>
+{% extends "base.html" %}
 
+{% block title %}WIP Account Creation{% endblock %}
+
+{% block content %}
+    <h1>Create Account</h1>
+
+    <div class="page-content">
         <form onsubmit="handleCreateAccount(event);">
-            <label for="email">Email:</label><br>
-            <input type="email" id="email" name="email"><br>
-            <label for="text">Display Name:</label><br>
-            <input type="text" id="display" name="display"><br>
-            <label for="text">Zipcode:</label><br>
-            <input type="text" id="zip" name="zip"><br>
-            <label for="password">Password:</label><br>
-            <input type="password" id="password" name="password"><br>
-            <label for="password">Confirm Password:</label><br>
-            <input type="password" id="password2" name="password"><br><br>
-            <input type="submit" value="Create Account" style="cursor: pointer;"><br>
-        
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email">
+            <label for="text">Display Name:</label>
+            <input type="text" id="display" name="display">
+            <label for="text">Zipcode:</label>
+            <input type="text" id="zip" name="zip">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password">
+            <label for="password">Confirm Password:</label>
+            <input type="password" id="password2" name="password">
+            <input type="submit" value="Create Account" class="btn-primary">
         </form>
 
-        <br>
-        <a href="{{ url_for('login')}}" style="margin: 10px;">
-            <button>Back</button>
+        <a href="{{ url_for('login') }}">
+            <button class="btn-secondary">Back</button>
         </a>
 
-        <div id="error-msg" style="color: red; margin-top: 10px;"></div>
+        <div id="error-msg"></div>
+    </div>
+{% endblock %}
 
-        <script src="{{ url_for('static', filename='scripts.js') }}"></script>
-    </body>
-</html>
+{% block scripts %}
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+{% endblock %}
