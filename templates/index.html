@@ -10,8 +10,21 @@
         <button onclick="grab_location_data();" class="btn-primary" style="width: auto; padding: 14px 24px;">Go</button>
         <button onclick="grab_default_data();" class="btn-secondary" style="width: auto; padding: 14px 24px;">Default Location</button>
     </div>
+````
+    <div class="weather-card">
+        <div id="divResults"></div>
+    </div>
 
-    <div id="divResults"></div>
+    <div class="recommendation-card">
+        <div class="rec-icon">
+            <img src="{{ url_for('static', filename='images/umbrella.svg') }}" width="40" height="40">
+        </div>
+        <div class="rec-text">
+            <p class="rec-title">Bring an umbrella today</p>
+            <p class="rec-desc">Rain likely % today, don't get caught without one.</p>
+        </div>
+    </div>
+
 {% endblock %}
 
 {% block scripts %}

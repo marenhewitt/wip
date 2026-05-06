@@ -226,7 +226,7 @@ hr {
     align-items: center;
 }
 
-/* MISC */
+/* CHECKOUT */
 
 #checkoutbox {
     border: 2px solid black;
@@ -234,6 +234,98 @@ hr {
     display: inline-block;
 }
 
+
+/* WEATHER MAIN CARD */
+
+#divResults {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+#divResults h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    padding: 0;
+}
+
+#divResults h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    padding: 0;
+}
+
+#divResults p {
+    font-size: 0.95rem;
+    color: #0F1117;
+    padding: 4px 0;
+}
+
+#divResults hr {
+    border: none;
+    border-top: 1px solid #E5E7EB;
+    margin: 8px 0;
+}
+
+#divResults ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#divResults li {
+    background: #fff;
+    border-radius: 12px;
+    padding: 12px 16px;
+    font-size: 0.9rem;
+    color: #0F1117;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.weather-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    margin-top: 20px;
+}
+
+/* RECOMMENDATION CARD */
+
+.recommendation-card {
+    background: #29B6F6;
+    border-radius: 20px;
+    padding: 24px;
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 2px 12px rgba(41,182,246,0.3);
+}
+
+.rec-icon {
+    font-size: 3rem;
+    line-height: 1;
+}
+
+.rec-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 4px;
+}
+
+.rec-desc {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.85);
+}
+
+
+/* MISC */
 #error-msg {
     color: red;
     margin-top: 10px;
