@@ -50,6 +50,17 @@ async function grab_location_data(passedZip) {
         divResults.innerHTML += dailyHtml;
             
         document.getElementById("zip").value = "";
+    
+
+        // rec
+        document.getElementById("cards-container").style.display = "flex";
+        document.getElementById("weather-summary").innerHTML = `
+            <p class="weather-feels">Feels like ${data.current.feels_like}°F</p>
+            <p class="weather-temp">Actual ${data.current.temp}°F</p>
+        `;
+        updateRecommendation(data.current.feels_like, data.precip_prob);
+    
+    
     } catch (err) {
         console.error(err);
         divResults.innerHTML = "Failed to fetch weather data.";
@@ -89,6 +100,15 @@ async function grab_default_data() {
                 <p>Humidity: ${data.humidity}%</p>
                 <small>Location: ${data.city_coords}</small>`;
         }
+
+        // rec
+        document.getElementById("cards-container").style.display = "flex";
+        document.getElementById("weather-summary").innerHTML = `
+            <p class="weather-feels">Feels like ${data.feels_like}°F</p>
+            <p class="weather-temp">Actual ${data.temp}°F</p>
+        `;
+        updateRecommendation(data.feels_like, data.precip_prob);
+
     } catch (err) {
         console.error(err);
         divResults.innerHTML = "Failed to fetch weather data.";

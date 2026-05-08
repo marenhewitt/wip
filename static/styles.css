@@ -227,11 +227,47 @@ hr {
 }
 
 /* CHECKOUT */
+.btn-purchase {
+    background-color: #5CB85C ;
+    border: 0;
+    border-radius: 56px;
+    color: #1a1a1a;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    outline: 0;
+    padding: 14px 32px;
+    position: relative;
+    text-align: center;
+    transition: all .3s;
+    width: auto;
+    margin-bottom: 12px;
+}
 
-#checkoutbox {
-    border: 2px solid black;
-    padding: 10px;
-    display: inline-block;
+.btn-purchase::before {
+    background-image: linear-gradient(#fff 0, rgba(255, 255, 255, 0) 100%);
+    border-radius: 125px;
+    content: "";
+    height: 50%;
+    left: 4%;
+    opacity: .4;
+    position: absolute;
+    top: 0;
+    transition: all .3s;
+    width: 92%;
+}
+
+.btn-purchase:hover {
+    box-shadow: rgba(159, 225, 29, .4) 0 3px 15px inset, rgba(0, 0, 0, .1) 0 3px 5px;
+    transform: scale(1.05);
+}
+
+.pixel-display {
+    background: #1a1a2e;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
 }
 
 
@@ -287,24 +323,62 @@ hr {
 }
 
 .weather-card {
-    background: #fff;
+    background: #29B6F6;
     border-radius: 20px;
     padding: 24px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
-    margin-top: 20px;
+    box-shadow: 0 2px 12px rgba(41,182,246,0.3);
+    margin-top: 8px;
 }
 
-/* RECOMMENDATION CARD */
+.weather-feels {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.weather-temp {
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.85);
+    margin-top: 4px;
+}
+
+.expand-btn {
+    background: none;
+    border: 1.5px solid rgba(255,255,255,0.5);
+    border-radius: 999px;
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 6px 14px;
+    cursor: pointer;
+    width: auto;
+    margin-top: 12px;
+    margin-bottom: 0;
+}
+
+.expand-btn:hover {
+    border-color: #fff;
+}
+
+/* RECOMMENDATION ICON CARD */
 
 .recommendation-card {
     background: #29B6F6;
     border-radius: 20px;
     padding: 24px;
-    margin-top: 16px;
+    margin-top: 0;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 16px;
     box-shadow: 0 2px 12px rgba(41,182,246,0.3);
+}
+
+
+.rec-desc {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.85);
+    display: none;
+    margin-top: 8px;
 }
 
 .rec-icon {
@@ -318,12 +392,6 @@ hr {
     color: #fff;
     margin-bottom: 4px;
 }
-
-.rec-desc {
-    font-size: 0.85rem;
-    color: rgba(255,255,255,0.85);
-}
-
 
 /* MISC */
 #error-msg {

@@ -3,30 +3,87 @@
 {% block title %}Weather Insider Prep{% endblock %}
 
 {% block content %}
-    <h1>Weather Insider Prep</h1>
+    <div class="page-content">
+        <h1 style="padding: 0;">WIP</h1>
+        <p style="color: #6B7280; margin-top: 4px;">Enter zip code</p>
 
-    <div style="display: flex; gap: 10px; align-items: center;">
-        <input type="text" id="zip" name="zipcode" placeholder="Enter Zipcode Here" style="flex: 1; min-width: 120px; margin-bottom: 0;">
-        <button onclick="grab_location_data();" class="btn-primary" style="width: auto; padding: 14px 24px;">Go</button>
-        <button onclick="grab_default_data();" class="btn-secondary" style="width: auto; padding: 14px 24px;">Default Location</button>
-    </div>
-````
-    <div class="weather-card">
-        <div id="divResults"></div>
-    </div>
-
-    <div class="recommendation-card">
-        <div class="rec-icon">
-            <img src="{{ url_for('static', filename='images/umbrella.svg') }}" width="40" height="40">
+        <div style="display: flex; gap: 10px; align-items: center;">
+            <input type="text" id="zip" name="zipcode" placeholder="ZIP" style="flex: 1; min-width: 80px; margin-bottom: 0;">
+            <button onclick="grab_location_data();" class="btn-primary" style="width: auto; padding: 14px 24px;">Go</button>
+            <button onclick="grab_default_data();" class="btn-secondary" style="width: auto; padding: 14px 24px;">Saved Location</button>
         </div>
-        <div class="rec-text">
-            <p class="rec-title">Bring an umbrella today</p>
-            <p class="rec-desc">Rain likely % today, don't get caught without one.</p>
+
+        <div id="cards-container" style="display: none; flex-direction: column; gap: 16px;">
+            <div class="weather-card">
+                <div id="weather-summary"></div>
+                <button class="expand-btn" onclick="toggleDetails()">▼ Details</button>
+                <div id="weather-details" style="display: none; margin-top: 12px;">
+                    <div id="divResults"></div>
+                </div>
+            </div>
+
+            <div class="recommendation-card">
+                <div class="rec-icon" id="rec-icon">🕶️</div>
+                <div class="rec-text">
+                    <p class="rec-title" id="rec-title">Loading...</p>
+                    <button class="expand-btn" onclick="toggleRecDetails()">▼ Why we recommend this</button>
+                    <p class="rec-desc" id="rec-desc"></p>
+                </div>
+            </div>
         </div>
     </div>
-
 {% endblock %}
 
 {% block scripts %}
     <script src="{{ url_for('static', filename='weatherscripts.js') }}"></script>
+    <script>
+
+        function toggleDetails() {
+            const details = document.getElementById('weather-details');
+            const btn = document.querySelector('.expand-btn');
+            if (details.style.display === 'none') {
+                details.style.display = 'block';
+                btn.textContent = '▲ Hide Details';
+            } else {
+                details.style.display = 'none';
+                btn.textContent = '▼ Details';
+            }
+        }
+
+        function toggleRecDetails() {
+            const desc = document.getElementById('rec-desc');
+            const btn = event.target;
+            if (desc.style.display === 'none' || desc.style.display === '') {
+                desc.style.display = 'block';
+                btn.textContent = '▲ Hide';
+            } else {
+                desc.style.display = 'none';
+                btn.textContent = '▼ Why we recommend this';
+            }
+        }
+
+        function updateRecommendation(feelsLike, precipProb) {
+            const icon = document.getElementById('rec-icon');
+            const title = document.getElementById('rec-title');
+            const desc = document.getElementById('rec-desc');
+
+            if (precipProb > 40) {
+                icon.innerHTML = '<img src="/static/images/umbrella.svg" width="48" height="48">';
+                title.textContent = 'Bring an umbrella today';
+                desc.textContent = 'Rain likely today.National weather guidelines recommends to be carrying an umbrella when daily precipitation probability exceeds 40%.';
+            } else if (feelsLike < 35) {
+                icon.innerHTML = '<img src="/static/images/snow.svg" width="48" height="48">';
+                title.textContent = 'Bundle up — winter coat needed';
+                desc.textContent = 'National weather guidelines recommends covering all exposed skin below 35°F to prevent frostbite. (WHO org)';
+            } else if (feelsLike < 60) {
+                icon.innerHTML = '<img src="/static/images/sweater.svg" width="48" height="48">';
+                title.textContent = 'Breeze - Grab a sweater or light jacket';
+                desc.textContent = 'Feels cooler than it looks. National weather guidelines recommends layering when temps feel below 60°F. (CDC org))';
+            } else {
+                icon.innerHTML = '<img src="/static/images/sunny.svg" width="48" height="48">';
+                title.textContent = 'Sunny day — wear sunscreen on exposed skin';
+                desc.textContent = 'National weather guidelines recommends SPF 30+ when UV conditions are present on warm clear days.(WHO org)';
+            }
+        } 
+    </script>
 {% endblock %}
