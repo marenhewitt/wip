@@ -296,7 +296,7 @@ hr {
 
 #divResults p {
     font-size: 0.95rem;
-    color: #0F1117;
+    color: #ffffff;
     padding: 4px 0;
 }
 
@@ -346,7 +346,7 @@ hr {
     background: none;
     border: 1.5px solid rgba(255,255,255,0.5);
     border-radius: 999px;
-    color: #fff;
+    color: #000000;
     font-size: 0.8rem;
     font-weight: 600;
     padding: 6px 14px;

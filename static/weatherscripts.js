@@ -15,9 +15,13 @@ async function grab_location_data(passedZip) {
         const data = await response.json();
 
         if (data.error) {
-            divResults.innerHTML = `Error: ${data.error}`;
+            document.getElementById('cards-container').style.display = 'flex';
+            document.getElementById('weather-summary').innerHTML = `
+                <p class="weather-feels" style="font-size: 1.2rem;">Invalid Zipcode</p>
+                <p class="weather-temp">Please enter a valid US zip code</p>
+            `;
             return;
-        } 
+        }
         
         divResults.innerHTML = `
             <h3>Current Weather</h3>
@@ -72,9 +76,13 @@ async function grab_default_data() {
     const user = auth.currentUser;
 
     if (!user || user.isAnonymous) {
-        divResults.innerHTML = "Please <a href='/login.html'>login</a> to use your saved zipcode.";
+        document.getElementById('cards-container').style.display = 'flex';
+        document.getElementById('weather-summary').innerHTML = `
+            <p class="weather-feels" style="font-size: 1.2rem;">Sign in for saved location</p>
+            <a href="/login.html" style="color: #fff; font-weight: 600;">Login or create an account →</a>
+        `;
         return;
-    }
+    }   
 
     divResults.innerHTML = "Loading...";
 
@@ -95,19 +103,19 @@ async function grab_default_data() {
         } else {
             divResults.innerHTML = `
                 <h3>Current Weather</h3>
-                <p>Temperature: ${data.temp}°F</p>
-                <p>Feels Like: ${data.feels_like}°F</p>
-                <p>Humidity: ${data.humidity}%</p>
+                <p>Temperature: ${data.current.temp}°F</p>
+                <p>Feels Like: ${data.current.feels_like}°F</p>
+                <p>Humidity: ${data.current.humidity}%</p>
                 <small>Location: ${data.city_coords}</small>`;
         }
 
         // rec
         document.getElementById("cards-container").style.display = "flex";
         document.getElementById("weather-summary").innerHTML = `
-            <p class="weather-feels">Feels like ${data.feels_like}°F</p>
-            <p class="weather-temp">Actual ${data.temp}°F</p>
+            <p class="weather-feels">Feels like ${data.current.feels_like}°F</p>
+            <p class="weather-temp">Actual ${data.current.temp}°F</p>
         `;
-        updateRecommendation(data.feels_like, data.precip_prob);
+        updateRecommendation(data.current.feels_like, data.precip_prob);
 
     } catch (err) {
         console.error(err);

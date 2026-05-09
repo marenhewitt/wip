@@ -35,6 +35,8 @@
 {% endblock %}
 
 {% block scripts %}
+
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
     <script src="{{ url_for('static', filename='weatherscripts.js') }}"></script>
     <script>
 
@@ -67,23 +69,23 @@
             const title = document.getElementById('rec-title');
             const desc = document.getElementById('rec-desc');
 
-            if (precipProb > 40) {
+            if (precipProb > 25) {
                 icon.innerHTML = '<img src="/static/images/umbrella.svg" width="48" height="48">';
                 title.textContent = 'Bring an umbrella today';
-                desc.textContent = 'Rain likely today.National weather guidelines recommends to be carrying an umbrella when daily precipitation probability exceeds 40%.';
+                desc.textContent = 'Rain likely today. Recommended to carry an umbrella when daily precipitation probability exceeds 25%.';
             } else if (feelsLike < 35) {
                 icon.innerHTML = '<img src="/static/images/snow.svg" width="48" height="48">';
                 title.textContent = 'Bundle up — winter coat needed';
-                desc.textContent = 'National weather guidelines recommends covering all exposed skin below 35°F to prevent frostbite. (WHO org)';
-            } else if (feelsLike < 60) {
+                desc.textContent = 'National weather guidelines recommend covering all exposed skin below 35°F to prevent frostbite. (WHO)';
+            } else if (feelsLike < 70) {
                 icon.innerHTML = '<img src="/static/images/sweater.svg" width="48" height="48">';
-                title.textContent = 'Breeze - Grab a sweater or light jacket';
-                desc.textContent = 'Feels cooler than it looks. National weather guidelines recommends layering when temps feel below 60°F. (CDC org))';
+                title.textContent = 'Chilly — Grab a sweater or light jacket';
+                desc.textContent = 'Feels cooler than it looks. National weather guidelines recommend layering when temps feel below 70°F. (CDC)';
             } else {
                 icon.innerHTML = '<img src="/static/images/sunny.svg" width="48" height="48">';
                 title.textContent = 'Sunny day — wear sunscreen on exposed skin';
-                desc.textContent = 'National weather guidelines recommends SPF 30+ when UV conditions are present on warm clear days.(WHO org)';
+                desc.textContent = 'National weather guidelines recommend SPF 30+ when UV conditions are present on warm clear days. (WHO)';
             }
-        } 
+        }
     </script>
 {% endblock %}

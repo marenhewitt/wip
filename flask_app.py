@@ -3,6 +3,9 @@ from flask_session import Session
 import firebase_admin
 from firebase_admin import credentials, firestore, messaging
 import weatherdata
+import schedule
+import time
+import threading
 
 cred = credentials.Certificate('weatherinsiderprep-firebase-adminsdk.json')
 firebase_admin.initialize_app(cred)
@@ -92,20 +95,65 @@ def get_weather():
     return jsonify(data)
 
 #notifs
-def send_daily_notification(token, weather_summary):
-    message = messaging.Message(
-        notification=messaging.Notification(
-            title='Your Daily Weather Update',
-            body=f"Today's forecast: {weather_summary}",
-        ),
-        token=token,
-    )
-    response = messaging.send(message)
-    print('Successfully sent message:', response)
+
+def get_recommendation(feels_like, precip_prob):
+    if precip_prob > 25:
+        return "🌂 Bring an umbrella today"
+    elif feels_like < 35:
+        return "❄️ Bundle up — winter coat needed"
+    elif feels_like < 70:
+        return "🧣 Chilly - Grab a sweater or light jacket"
+    else:
+        return "☀️ Sunny day — wear sunscreen on exposed skin"
+
+def send_daily_notifications():
+    print("Running daily notifications...")
+    try:
+        users = db.collection('users').stream()
+        for user in users:
+            user_data = user.to_dict()
+            token = user_data.get('fcmToken')
+            zipcode = user_data.get('zipcode')
+
+            if not token or not zipcode:
+                continue
+
+            weather = weatherdata.get_weather(zipcode)
+            if 'error' in weather:
+                continue
+
+            feels_like = weather['feels_like']
+            precip_prob = weather.get('precip_prob', 0)
+            print(f"Feels like: {feels_like}, Precip prob: {precip_prob}")
+            recommendation = get_recommendation(feels_like, precip_prob)
+
+            message = messaging.Message(
+                notification=messaging.Notification(
+                    title='Weather Insider Prep',
+                    body=f"Feels like {feels_like}°F — {recommendation}",
+                ),
+                token=token,
+            )
+            messaging.send(message)
+            print(f"Sent to {user.id}: {recommendation}")
+
+    except Exception as e:
+        print(f"Notification error: {e}")
 
 @app.route('/firebase-messaging-sw.js')
 def service_worker():
     return app.send_static_file('firebase-messaging-sw.js')
+
+
+# timed @ 6 am
+def run_scheduler():
+    schedule.every().day.at("06:00").do(send_daily_notifications)
+    while True:
+        schedule.run_pending()
+        time.sleep(60)
+
+scheduler_thread = threading.Thread(target=run_scheduler, daemon=True)
+scheduler_thread.start()
 
 if __name__ == '__main__':
     app.run(debug=True)
