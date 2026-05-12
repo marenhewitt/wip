@@ -8,7 +8,13 @@ import time
 import threading
 import os
 
-cred = credentials.Certificate('weatherinsiderprep-firebase-adminsdk.json')
+if os.environ.get('RENDER'):
+    cred_path = '/etc/secrets/weatherinsiderprep-firebase-adminsdk.json'
+else:
+    cred_path = 'weatherinsiderprep-firebase-adminsdk.json'
+
+cred = credentials.Certificate(cred_path)
+#cred = credentials.Certificate('weatherinsiderprep-firebase-adminsdk.json')
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 
