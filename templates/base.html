@@ -4,7 +4,7 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
         <link rel="manifest" href="/static/manifest.json">
         <meta charset="utf-8">
-        <title>{% block title %}Weather Insider Prep{% endblock %}</title>
+        <title>{% block title %}W.I.P{% endblock %}</title>
         <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/cloud_icon.png') }}">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
@@ -13,6 +13,10 @@
         {% block head %}{% endblock %}
     </head>
     <body>
+
+        <div class="top-bar">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" height="64">
+        </div>
 
         <nav class="bottom-nav">
             <a href="{{ url_for('index') }}" class="nav-item {% if request.endpoint == 'index' %}active{% endif %}">
@@ -25,7 +29,7 @@
             </a>
             <a href="{{ url_for('profile') }}" class="nav-item {% if request.endpoint == 'profile' %}active{% endif %}">
                 <img src="{{ url_for('static', filename='images/account.svg') }}" width="24" height="24">
-                <span>Settings</span>
+                <span>Profile</span>
             </a>
         </nav>
 

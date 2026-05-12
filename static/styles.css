@@ -26,7 +26,7 @@ h1 {
 }
 
 .page-content {
-    padding: 24px 20px;
+    padding: 60px 20px 24px 20px;
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -77,6 +77,12 @@ hr {
     margin: 8px 0;
 }
 
+.top-bar {
+    position: absolute;
+    top: 12px;
+    right: 20px;
+    z-index: 50;
+}
 /* BOTTOM NAVIGATION BARR */
 
 .bottom-nav {
@@ -171,6 +177,26 @@ hr {
 .btn-secondary:hover {
     background-color: #29B6F6;
     color: #fff;
+}
+
+.btn-logout {
+    background-color: #FF3B30;
+    border: 0;
+    border-radius: 56px;
+    color: #fff;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 14px 32px;
+    width: 100%;
+    transition: all .3s;
+    margin-bottom: 12px;
+}
+
+.btn-logout:hover {
+    opacity: 0.85;
+    transform: scale(1.02);
 }
 
 /* GOOGLE BUTTON */

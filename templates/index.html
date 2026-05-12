@@ -4,13 +4,12 @@
 
 {% block content %}
     <div class="page-content">
-        <h1 style="padding: 0;">WIP</h1>
-        <p style="color: #6B7280; margin-top: 4px;">Enter zip code</p>
+        <h1 style="padding: 0;">Weather Insider Prep</h1>
 
         <div style="display: flex; gap: 10px; align-items: center;">
-            <input type="text" id="zip" name="zipcode" placeholder="ZIP" style="flex: 1; min-width: 80px; margin-bottom: 0;">
-            <button onclick="grab_location_data();" class="btn-primary" style="width: auto; padding: 14px 24px;">Go</button>
-            <button onclick="grab_default_data();" class="btn-secondary" style="width: auto; padding: 14px 24px;">Saved Location</button>
+            <input type="text" id="zip" name="zipcode" placeholder="Enter zip code" style="flex: 1; min-width: 80px; margin-bottom: 0;">
+            <button onclick="grab_location_data();" class="btn-primary" style="width: auto; padding: 14px 16px; white-space: nowrap;">Go</button>
+            <button onclick="grab_default_data();" class="btn-secondary" style="width: auto; padding: 14px 16px; white-space: nowrap; font-size: 0.85rem;">Saved</button>
         </div>
 
         <div id="cards-container" style="display: none; flex-direction: column; gap: 16px;">
