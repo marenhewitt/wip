@@ -105,13 +105,13 @@ def get_weather():
 
 def get_recommendation(feels_like, precip_prob):
     if precip_prob > 25:
-        return "🌂 Bring an umbrella today"
+        return ("🌂", "Rainy")
     elif feels_like < 35:
-        return "❄️ Bundle up — winter coat needed"
+        return ("❄️", "Freeze")
     elif feels_like < 70:
-        return "🧣 Chilly - Grab a sweater or light jacket"
+        return ("🧣", "Chilly")
     else:
-        return "☀️ Sunny day — wear sunscreen on exposed skin"
+        return ("🕶️", "Sunny")
 
 def send_daily_notifications():
     print("Running daily notifications...")
@@ -132,20 +132,36 @@ def send_daily_notifications():
             feels_like = weather['feels_like']
             precip_prob = weather.get('precip_prob', 0)
             print(f"Feels like: {feels_like}, Precip prob: {precip_prob}")
-            recommendation = get_recommendation(feels_like, precip_prob)
+            icon, word = get_recommendation(feels_like, precip_prob)
 
             message = messaging.Message(
                 notification=messaging.Notification(
                     title='Weather Insider Prep',
-                    body=f"Feels like {feels_like}°F — {recommendation}",
+                    body=f"Feels like {feels_like}°F — {icon} {word}",
                 ),
                 token=token,
             )
             messaging.send(message)
-            print(f"Sent to {user.id}: {recommendation}")
+            print(f"Sent to {user.id}: {icon} {word}")
 
     except Exception as e:
         print(f"Notification error: {e}")
+
+@app.route('/get_display')
+def get_display():
+    zip_code = request.args.get('zip', '10001')
+    data = weatherdata.get_weather(zip_code)
+    if 'error' in data:
+        return jsonify({"line1": "No data", "line2": ""})
+    
+    feels_like = data['feels_like']
+    precip_prob = data.get('precip_prob', 0)
+    icon, word = get_recommendation(feels_like, precip_prob)
+    
+    return jsonify({
+        "line1": f"Feels like: {feels_like}F",
+        "line2": f"{word}"
+    })
 
 @app.route('/firebase-messaging-sw.js')
 def service_worker():
