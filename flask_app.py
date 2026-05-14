@@ -170,7 +170,7 @@ def service_worker():
 
 # timed @ 6 am
 def run_scheduler():
-    schedule.every(2).minutes.do(send_daily_notifications) 
+    schedule.every().day.at("6:00").do(send_daily_notifications) 
     while True:
         schedule.run_pending()
         time.sleep(60)
