@@ -12,7 +12,18 @@ import json
 firebase_json = os.environ.get('FIREBASE_CONFIG_JSON')
 
 if firebase_json:
-    cred = credentials.Certificate(json.loads(firebase_json))
+    raw_env_string = firebase_json.strip()
+    if raw_env_string.startswith(('"', "'")) and raw_env_string.endswith(('"', "'")):
+        raw_env_string = raw_env_string[1:-1].strip()
+
+    try:
+        config_dict = json.loads(raw_env_string)
+        if "private_key" in config_dict:
+            config_dict["private_key"] = config_dict["private_key"].replace("\\n", "\n")
+        cred = credentials.Certificate(config_dict)
+    except Exception as e:
+        print(f"Critical Firebase JSON config parsing error: {e}")
+        raise e
 else:
     cred_path = 'weatherinsiderprep-firebase-adminsdk.json'
     cred = credentials.Certificate(cred_path)
@@ -141,6 +152,21 @@ def send_daily_notifications():
                     title='Weather Insider Prep',
                     body=f"Feels like {feels_like}°F — {icon} {word}",
                 ),
+                android=messaging.AndroidConfig(
+                    priority='high',
+                    notification=messaging.AndroidNotification(
+                        sound='default',
+                        sticky=False
+                    )
+                ),
+                apns= messaging.APNSConfig(
+                    payload=messaging.APNSPayload(
+                        aps=messaging.Aps(
+                            sound='default',
+                            content_available=True
+                        )
+                    )
+                ),
                 token=token,
             )
             messaging.send(message)
@@ -172,13 +198,19 @@ def service_worker():
 
 # timed @ 6 am
 def run_scheduler():
-    schedule.every().day.at("6:00").do(send_daily_notifications) 
+    target_utc_time = "10:00"
+
+    schedule.every().day.at(target_utc_time).do(send_daily_notifications) 
     while True:
         schedule.run_pending()
-        time.sleep(60)
+        time.sleep(30)
 
-scheduler_thread = threading.Thread(target=run_scheduler, daemon=True)
-scheduler_thread.start()
+def start_prod_scheduler():
+    if os.environ.get("WERKZEUG_RUN_MAIN") != "true":
+        scheduler_thread = threading.Thread(target=run_scheduler, daemon=True)
+        scheduler_thread.start()
+
+start_prod_scheduler()
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
