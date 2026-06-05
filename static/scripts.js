@@ -228,8 +228,7 @@ auth.onAuthStateChanged(user => {
 function checkout(e) {
     if (e) e.preventDefault();
     try {
-        alert("Order Recieved! Redirecting to profile")
-        window.location.href = "profile.html" 
+        alert('WIP is currently not taking orders. Apologies for the inconvenience.');
     } catch(err) {
         showError(err.message);
     }
