@@ -43,31 +43,31 @@
         </div>
 
         <!-- Purchase Form (hidden by default) -->
-        <div id="purchase-form" style="display: none; flex-direction: column; gap: 16px;">
+        <form id="purchase-form" style="display: none; flex-direction: column; gap: 16px;" onsubmit="submitOrder(event)">
 
             <div class="weather-card">
                 <h3 style="font-weight: 700; margin-bottom: 16px;">Contact Information</h3>
-                <input type="text" id="fname" placeholder="First Name">
-                <input type="text" id="lname" placeholder="Last Name">
-                <input type="text" id="phonenum" placeholder="Phone Number">
-                <input type="text" id="shipemail" placeholder="Email">
+                <input type="text" id="fname" placeholder="First Name" required>
+                <input type="text" id="lname" placeholder="Last Name" required>
+                <input type="text" id="phonenum" placeholder="Phone Number" required> 
+                <input type="text" id="shipemail" placeholder="Email" required>
             </div>
 
             <div class="weather-card">
                 <h3 style="font-weight: 700; margin-bottom: 16px;">Shipping</h3>
-                <input type="text" id="address" placeholder="Address Line 1">
+                <input type="text" id="address" placeholder="Address Line 1" required>
                 <input type="text" id="address2" placeholder="Address Line 2 (optional)">
-                <input type="text" id="city" placeholder="City">
-                <input type="text" id="state" placeholder="State">
-                <input type="text" id="shipzip" placeholder="Zipcode">
+                <input type="text" id="city" placeholder="City" required>
+                <input type="text" id="state" placeholder="State" required>
+                <input type="text" id="shipzip" placeholder="Zipcode" required>
             </div>
 
             <div class="weather-card">
                 <h3 style="font-weight: 700; margin-bottom: 16px;">Payment</h3>
-                <input type="text" id="cardname" placeholder="Cardholder Name">
-                <input type="text" id="cardnum" placeholder="Card Number">
-                <input type="text" id="expdate" placeholder="Expiry Date MM/YY">
-                <input type="text" id="seccode" placeholder="Security Code">
+                <input type="text" id="cardname" placeholder="Cardholder Name" required>
+                <input type="text" id="cardnum" placeholder="Card Number" required>
+                <input type="text" id="expdate" placeholder="Expiry Date MM/YY" required>
+                <input type="text" id="seccode" placeholder="Security Code" required>
             </div>
 
             <div class="weather-card">
@@ -83,10 +83,10 @@
                 </div>
             </div>
 
-            <button class="btn-purchase" onclick="submitOrder()">Confirm Order</button>
-            <button class="btn-secondary" onclick="hidePurchaseForm()">Cancel</button>
+            <button class="btn-purchase" type="submit">Confirm Order</button>
+            <button class="btn-secondary" type="button" onclick="hidePurchaseForm()">Cancel</button>
 
-        </div>
+        </form>
     </div>
 {% endblock %}
 
@@ -115,8 +115,10 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function submitOrder() {
-            alert('Thank you for your WIP order! We will be in touch soon.s :)');
+        function submitOrder(e) {
+            e.preventDefault();
+            alert('WIP is currently not taking orders. Apologies for the inconvenience. Your purchase information will not be saved.');
+            document.getElementById('purchase-form').reset();
             hidePurchaseForm();
         }
     </script>
