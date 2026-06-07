@@ -1,6 +1,6 @@
 http://127.0.0.1:5000
 
-timezone / time change
+timezone input field
 
 <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
 

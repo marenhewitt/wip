@@ -175,6 +175,64 @@ def send_daily_notifications():
     except Exception as e:
         print(f"Notification error: {e}")
 
+#updated version of send notif function, keeping both for now
+def check_and_send_notifications():
+    """ Runs every minute to find and notify users based on their current time """
+    print("Checking for pending scheduled notifications...")
+    try:
+        # 1. Get the current system time formatted matching your JS input (HH:MM)
+        current_time_str = time.strftime("%H:%M")
+        print(f"Current System Clock: {current_time_str}")
+
+        # 2. Directly query Firestore for only users assigned to THIS specific minute
+        users_ref = db.collection('users').where('notifTime', '==', current_time_str).stream()
+
+        for user in users_ref:
+            user_data = user.to_dict()
+            token = user_data.get('fcmToken')
+            zipcode = user_data.get('zipcode')
+
+            if not token or not zipcode:
+                continue
+
+            # Fetch the weather via your helper script
+            weather = weatherdata.get_weather(zipcode)
+            if 'error' in weather:
+                continue
+
+            feels_like = weather['feels_like']
+            precip_prob = weather.get('precip_prob', 0)
+            icon, word = get_recommendation(feels_like, precip_prob)
+
+            # Build and deploy the FCM payload
+            message = messaging.Message(
+                notification=messaging.Notification(
+                    title='Weather Insider Prep',
+                    body=f"Feels like {feels_like}°F — {icon} {word}",
+                ),
+                android=messaging.AndroidConfig(
+                    priority='high',
+                    notification=messaging.AndroidNotification(
+                        sound='default',
+                        sticky=False
+                    )
+                ),
+                apns=messaging.APNSConfig(
+                    payload=messaging.APNSPayload(
+                        aps=messaging.Aps(
+                            sound='default',
+                            content_available=True
+                        )
+                    )
+                ),
+                token=token,
+            )
+            messaging.send(message)
+            print(f"Successfully sent scheduled notification to User ID {user.id}")
+
+    except Exception as e:
+        print(f"Notification engine execution error: {e}")
+
 @app.route('/get_display')
 def get_display():
     zip_code = request.args.get('zip', '10001')
@@ -195,12 +253,8 @@ def get_display():
 def service_worker():
     return app.send_static_file('firebase-messaging-sw.js')
 
-
-# timed @ 6 am
 def run_scheduler():
-    target_utc_time = "10:00"
-
-    schedule.every().day.at(target_utc_time).do(send_daily_notifications) 
+    schedule.every().minute.do(check_and_send_notifications) 
     while True:
         schedule.run_pending()
         time.sleep(30)
