@@ -30,6 +30,7 @@
             <p>Email: <span id="user-email"></span></p>
             <p>Saved Zipcode: <span id="user-zipcode"></span></p>
             <p>Notifications: <span id="user-notification"></span></p>
+            <p>Notifcation Time: <span id="display-notif-time">None Set</span></p>
             <hr>
 
             <div>
@@ -43,10 +44,44 @@
             </div>
 
             <div id="notif-section">
-                <label>Daily 6 am Notifications: </label>
+                <label>Daily Notifications: </label>
                 <button id="notif-btn-on" onclick="notifsPerm()" class="btn-secondary">Enable</button>
                 <button id="notif-btn-off" onclick="disableNotifs()" class="btn-secondary">Disable</button>
             </div>
+
+            <div class="time-picker">
+                <p>Personalize Notification Time: </p>
+                <select id="time-hour" required>
+                    <option value="01">1</option>
+                    <option value="02">2</option>
+                    <option value="03">3</option>
+                    <option value="04">4</option>
+                    <option value="05">5</option>
+                    <option value="06" selected>6</option> 
+                    <option value="07">7</option>
+                    <option value="08">8</option>
+                    <option value="09">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                </select>
+
+                <select id="time-min" required>
+                    <option value="00" selected>00</option>
+                    <option value="15">15</option>
+                    <option value="30">30</option>
+                    <option value="45">45</option>
+                </select>
+
+                <select id="time-ampm" required>
+                    <option value="AM" selected>AM</option>
+                    <option value="PM">PM</option>
+                </select>
+
+                <input type="hidden" id="notif-time" name="notif-time" value="06:00">
+            </div>
+
+            <hr>
 
             <div id="error-msg"></div>
 
